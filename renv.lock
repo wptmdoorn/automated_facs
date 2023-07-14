@@ -1,0 +1,202 @@
+{
+  "R": {
+    "Version": "4.3.1",
+    "Repositories": [
+      {
+        "Name": "CRAN",
+        "URL": "https://cloud.r-project.org"
+      }
+    ]
+  },
+  "Bioconductor": {
+    "Version": "3.17"
+  },
+  "Packages": {
+    "BH": {
+      "Package": "BH",
+      "Version": "1.81.0-1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "68122010f01c4dcfbe58ce7112f2433d"
+    },
+    "Biobase": {
+      "Package": "Biobase",
+      "Version": "2.60.0",
+      "Source": "Bioconductor",
+      "git_url": "https://git.bioconductor.org/packages/Biobase",
+      "git_branch": "RELEASE_3_17",
+      "git_last_commit": "8dc10d2",
+      "git_last_commit_date": "2023-04-25",
+      "Requirements": [
+        "BiocGenerics",
+        "R",
+        "methods",
+        "utils"
+      ],
+      "Hash": "ed269b250f5844d54dfdc7e749f901aa"
+    },
+    "BiocGenerics": {
+      "Package": "BiocGenerics",
+      "Version": "0.46.0",
+      "Source": "Bioconductor",
+      "git_url": "https://git.bioconductor.org/packages/BiocGenerics",
+      "git_branch": "RELEASE_3_17",
+      "git_last_commit": "a90f0c5",
+      "git_last_commit_date": "2023-04-25",
+      "Requirements": [
+        "R",
+        "graphics",
+        "methods",
+        "stats",
+        "utils"
+      ],
+      "Hash": "c179ae59955c36f5d0068ed29ce832f7"
+    },
+    "BiocManager": {
+      "Package": "BiocManager",
+      "Version": "1.30.21",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "utils"
+      ],
+      "Hash": "be203e7eea75514bc1a41c1de39a9bb9"
+    },
+    "BiocVersion": {
+      "Package": "BiocVersion",
+      "Version": "3.17.1",
+      "Source": "Bioconductor",
+      "git_url": "https://git.bioconductor.org/packages/BiocVersion",
+      "git_branch": "master",
+      "git_last_commit": "a2d0c4c",
+      "git_last_commit_date": "2022-11-02",
+      "Requirements": [
+        "R"
+      ],
+      "Hash": "f7c0d5521799b7b0d0a211143ed0bfcb"
+    },
+    "RProtoBufLib": {
+      "Package": "RProtoBufLib",
+      "Version": "2.12.0",
+      "Source": "Bioconductor",
+      "git_url": "https://git.bioconductor.org/packages/RProtoBufLib",
+      "git_branch": "RELEASE_3_17",
+      "git_last_commit": "1746df1",
+      "git_last_commit_date": "2023-04-25",
+      "Hash": "65803e0274e085c1fc81f24a239dcc8a"
+    },
+    "Rcpp": {
+      "Package": "Rcpp",
+      "Version": "1.0.10",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "methods",
+        "utils"
+      ],
+      "Hash": "e749cae40fa9ef469b6050959517453c"
+    },
+    "Rhdf5lib": {
+      "Package": "Rhdf5lib",
+      "Version": "1.22.0",
+      "Source": "Bioconductor",
+      "git_url": "https://git.bioconductor.org/packages/Rhdf5lib",
+      "git_branch": "RELEASE_3_17",
+      "git_last_commit": "2bf06b3",
+      "git_last_commit_date": "2023-04-25",
+      "Requirements": [
+        "R"
+      ],
+      "Hash": "e7076cf88b7dbc0bc4ab9804afadf3ae"
+    },
+    "S4Vectors": {
+      "Package": "S4Vectors",
+      "Version": "0.38.1",
+      "Source": "Bioconductor",
+      "git_url": "https://git.bioconductor.org/packages/S4Vectors",
+      "git_branch": "RELEASE_3_17",
+      "git_last_commit": "17a9d8c",
+      "git_last_commit_date": "2023-05-01",
+      "Requirements": [
+        "BiocGenerics",
+        "R",
+        "methods",
+        "stats",
+        "stats4",
+        "utils"
+      ],
+      "Hash": "f0a46e23a2a7d6aa27e945faf7f242c7"
+    },
+    "cpp11": {
+      "Package": "cpp11",
+      "Version": "0.4.3",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "ed588261931ee3be2c700d22e94a29ab"
+    },
+    "cytolib": {
+      "Package": "cytolib",
+      "Version": "2.12.0",
+      "Source": "Bioconductor",
+      "git_url": "https://git.bioconductor.org/packages/cytolib",
+      "git_branch": "RELEASE_3_17",
+      "git_last_commit": "50c9685",
+      "git_last_commit_date": "2023-04-25",
+      "Requirements": [
+        "BH",
+        "R",
+        "RProtoBufLib",
+        "Rhdf5lib"
+      ],
+      "Hash": "190103825c24a05e54194209ee595820"
+    },
+    "flowCore": {
+      "Package": "flowCore",
+      "Version": "2.12.0",
+      "Source": "Bioconductor",
+      "git_url": "https://git.bioconductor.org/packages/flowCore",
+      "git_branch": "RELEASE_3_17",
+      "git_last_commit": "04755bc",
+      "git_last_commit_date": "2023-04-25",
+      "Requirements": [
+        "BH",
+        "Biobase",
+        "BiocGenerics",
+        "R",
+        "RProtoBufLib",
+        "Rcpp",
+        "S4Vectors",
+        "cpp11",
+        "cytolib",
+        "grDevices",
+        "graphics",
+        "matrixStats",
+        "methods",
+        "stats",
+        "stats4",
+        "utils"
+      ],
+      "Hash": "cdb801e1ddd109fdbd0213d3b2c03be9"
+    },
+    "matrixStats": {
+      "Package": "matrixStats",
+      "Version": "1.0.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R"
+      ],
+      "Hash": "9143629fd64335aac6a6250d1c1ed82a"
+    },
+    "renv": {
+      "Package": "renv",
+      "Version": "0.17.3",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "utils"
+      ],
+      "Hash": "4543b8cd233ae25c6aba8548be9e747e"
+    }
+  }
+}

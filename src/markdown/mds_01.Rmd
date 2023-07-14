@@ -1,0 +1,26 @@
+---
+title: MDS 01 Panel
+output: pdf_document
+params:
+    data: !r data(mtcars); mtcars
+---
+
+```{r, setup, include=FALSE}
+knitr::opts_knit$set(root.dir = '../..')
+knitr::knit_hooks$set(crop = knitr::hook_pdfcrop)
+```
+
+```{r, echo=FALSE}
+# load libraries
+source("src/plot.R", local = plot <- new.env())
+```
+
+# Plots
+
+```{r, echo=FALSE, message=FALSE}
+#| crop: true
+
+plot$get_plots_for_shiny("MDS_01", data)
+```
+
+End.

@@ -1,0 +1,76 @@
+{
+  "panels": {
+    "MDS_01": {
+      "ncol": 4,
+      "nrow": 5,
+      "layout": [
+        [["SSC-A", "FSC-A"], ["FSC-H", "FSC-A"], "", ""],
+        [["SSC-A", "V500-A"], ["SSC-A", "PerCP-Cy5-5-A"], "", ""],
+        [
+          ["PE-A", "FITC-A"],
+          ["V450-A", "PerCP-Cy5-5-A"],
+          ["V450-A", "PerCP-Cy5-5-A"],
+          ["APC-H7-A", "PerCP-Cy5-5-A"]
+        ],
+        [
+          ["APC-A", "FITC-A"],
+          ["PE-A", "PerCP-Cy5-5-A"],
+          ["PE-A", "PerCP-Cy5-5-A"],
+          ["APC-H7-A", "PerCP-Cy5-5-A"]
+        ],
+        [
+          ["PE-A", "APC-A"],
+          ["PE-Cy7-A", "PerCP-Cy5-5-A"],
+          ["PE-Cy7-A", "PerCP-Cy5-5-A"],
+          ""
+        ]
+      ]
+    }
+  },
+  "layers": {
+    "SSC-A": {
+      "marker": "",
+      "scale": "linear"
+    },
+    "FSC-A": {
+      "marker": "",
+      "scale": "linear"
+    },
+    "FSC-H": {
+      "marker": "",
+      "scale": "linear"
+    },
+    "V500-A": {
+      "marker": "CD45",
+      "scale": "fasinh"
+    },
+    "PerCP-Cy5-5-A": {
+      "marker": "CD34",
+      "scale": "fasinh"
+    },
+    "PE-A": {
+      "marker": "CD13",
+      "scale": "fasinh"
+    },
+    "FITC-A": {
+      "marker": "CD16",
+      "scale": "fasinh"
+    },
+    "V450-A": {
+      "marker": "HLADR",
+      "scale": "fasinh"
+    },
+    "APC-H7-A": {
+      "marker": "CD10",
+      "scale": "fasinh"
+    },
+    "APC-A": {
+      "marker": "CD11b",
+      "scale": "fasinh"
+    },
+    "PE-Cy7-A": {
+      "marker": "CD117",
+      "scale": "fasinh"
+    }
+  }
+}
