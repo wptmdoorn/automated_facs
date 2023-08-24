@@ -12,14 +12,14 @@ data <- flowWorkspace::compensate(
 
 gate.debris <- polygonGate(
     filterId = "leukocytes",
-    "FSC-A" = c(20000, 50000, 40000, 262400, 262400),
+    "FSC-A" = c(20000, 50000, 40000, 252400, 262400),
     "SSC-A" = c(10000, 60000, 262400, 262400, 0)
 )
 
 gate.singlets <- polygonGate(
     filterId = "singlets",
-    "FSC-A" = c(0, 0, 50000, 262400, 262400),
-    "FSC-H" = c(0, 30000, 70000, 175000, 100000)
+    "FSC-A" = c(0, 0, 50000, 252400, 250400),
+    "FSC-H" = c(0, 30000, 70000, 155000, 96000)
 )
 
 gs <- GatingSet(flowSet(data))
