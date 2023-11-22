@@ -1,0 +1,82 @@
+---
+output: pdf_document
+pdf_document: null
+params:
+    data: "data"
+    gates: "gates"
+geometry: "left=3cm,right=3cm,top=0.5cm,bottom=0.2cm"
+--- 
+
+---
+title: `r params$gates$filename`
+---
+
+```{r, setup, include=FALSE}
+knitr::opts_knit$set(root.dir = '../..')
+knitr::knit_hooks$set(crop = knitr::hook_pdfcrop)
+```
+
+```{r, echo=FALSE}
+library(ggplot2)
+library(flowCore)
+library(flowViz)
+library(flowDensity)
+library(knitr)
+```
+
+\vspace{-1cm}
+
+## Singlet gate (FSC-A vs FSC-H)
+\vspace{-0.5cm}
+```{r, echo=FALSE, message=FALSE, fig.width=4.5, fig.height=4.5, fig.align='center'}
+par(mar=c(5, 4, 1, 2) + 0.1)
+plotDens(params$data, c("FSC-A", "FSC-H"), main='')
+lines(params$gates$singlets@filter, type = "l", col='red')
+```
+
+\vspace{-1cm}
+
+## Leukocyte differentation gate (SSC-A vs CD45)
+\vspace{-0.5cm}
+```{r, echo=FALSE, message=FALSE, fig.width=4.5, fig.height=4.5, fig.align='center'}
+par(mar=c(5, 4, 1, 2) + 0.1)
+plotDens(params$data, channels = c("V500-A", "SSC-A"), main='')
+points(params$gates$granu@filter, type = "l", col = "blue", lwd = 2)
+points(params$gates$ery@filter, type = "l", col = "purple", lwd = 2)
+points(params$gates$lympho@filter, type = "l", col = "red", lwd = 2)
+points(params$gates$mono@filter, type = "l", col = "green", lwd = 2)
+```
+
+## Low side scatter gate (FSC-A vs SSC-A)
+\vspace{-0.5cm}
+```{r, echo=FALSE, message=FALSE, fig.width=4.5, fig.height=4.5, fig.align='center'}
+par(mar=c(5, 4, 1, 2) + 0.1)
+plotDens(params$gates$singlets, channels = c("FSC-A", "SSC-A"), main='')
+points(params$gates$low_ssc@filter, type = "l", col = "red", lwd = 2)
+```
+
+## Select CD34+ blast cells (CD45 vs CD34)
+\vspace{-0.5cm}
+```{r, echo=FALSE, message=FALSE, fig.width=4.5, fig.height=4.5, fig.align='center'}
+par(mar=c(5, 4, 1, 2) + 0.1)
+plotDens(params$gates$low_ssc, channels = c("V500-A", "PerCP-Cy5-5-A"), main='')
+points(params$gates$cd34_cd45_pos@filter, type = "l", col = "red", lwd = 2)
+```
+
+## Visualize B-prog. cells and Myeloblasts (CD10 versus CD34)
+\vspace{-0.5cm}
+```{r, echo=FALSE, message=FALSE, fig.width=4.5, fig.height=4.5, fig.align='center'}
+par(mar=c(5, 4, 1, 2) + 0.1)
+plotDens(params$gates$cd34_cd45_pos,
+    channels = c("PerCP-Cy5-5-A", "APC-H7-A"),
+    xlim = c(0, 5), ylim = c(0, 5)
+)
+points(params$gates$bprog@filter, type = "l", col = "red", lwd = 2)
+points(params$gates$myeloblast@filter, type = "l", col = "blue", lwd = 2)
+```
+
+## Display the Table of the OGATA score with all components and final score
+\vspace{-0.5cm}
+```{r, echo= FALSE, results='asis'}
+kable(params$gates$ogata_table)
+```
