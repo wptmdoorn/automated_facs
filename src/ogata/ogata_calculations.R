@@ -22,9 +22,10 @@ process_ogata <- function(data, file) {
 
     granu <- flowDensity(
         obj = granu, channels = c("V500-A", "SSC-A"),
-        position = c(FALSE, TRUE),
-        percentile = c(0.9, 0.05), use.percentile = c(T, T),
-        ellip.gate = T,
+        position = c(NA, TRUE),
+        # use.percentile = c(T, F),
+        # percentile = c(.05, NA),
+        gates = c(NA, 20000)
     )
 
     ery <- flowDensity(
@@ -100,7 +101,7 @@ process_ogata <- function(data, file) {
         obj = singlets,
         channels = c("V500-A", "PerCP-Cy5-5-A"),
         position = c(NA, TRUE),
-        percentile = c(NA, .975)
+        percentile = c(NA, .9975)
     )
 
     bprog <- flowDensity(
@@ -108,6 +109,10 @@ process_ogata <- function(data, file) {
         channels = c("PerCP-Cy5-5-A", "APC-H7-A"),
         position = c(TRUE, TRUE),
         gates = c(.1, NA),
+        filter = matrix(c(
+            2, 2, 4, 4, # x
+            5, 3.5, 3.5, 5 # y
+        ), 4, 2)
     )
 
     myeloblast <- flowDensity(
@@ -116,11 +121,6 @@ process_ogata <- function(data, file) {
         position = c(TRUE, FALSE),
         gates = c(.1, NA),
     )
-
-    print(cd34_cd45_pos@cell.count)
-    print(myeloblast@cell.count)
-    print(bprog@cell.count)
-    print(singlets@cell.count)
 
     ogata_myeloblast <- (myeloblast@cell.count / singlets@cell.count) * 100
     ogata_bprog <- (bprog@cell.count / cd34_cd45_pos@cell.count) * 100
@@ -134,6 +134,27 @@ process_ogata <- function(data, file) {
     total <- (ogata_myeloblast > 2) + (ogata_bprog < 5) +
         (ogata_lymph_myeloblast <= 4 | ogata_lymph_myeloblast >= 7.5) +
         (ogata_granulo_lymph <= 6)
+
+    ogata_raw_table <- data.frame(
+        "Parameter" = c(
+            "Number of CD34/CD45 pos cells",
+            "Number of B-progenitor cells",
+            "Number of myeloblast cells",
+            "Lymphocyte CD45 intensity",
+            "Myeloblast CD45 intensity",
+            "Granulocyte SSC intensity",
+            "Lymphocyte SSC intensity"
+        ),
+        "Result" = c(
+            cd34_cd45_pos@cell.count,
+            bprog@cell.count,
+            myeloblast@cell.count,
+            mean(exprs(lympho@flow.frame)[, "V500-A"], na.rm = TRUE),
+            mean(exprs(myeloblast@flow.frame)[, "V500-A"], na.rm = TRUE),
+            mean(exprs(granu@flow.frame)[, "SSC-A"], na.rm = TRUE),
+            mean(exprs(lympho@flow.frame)[, "SSC-A"], na.rm = TRUE)
+        )
+    )
 
     ogata_table <- data.frame(
         Parameter = c(
@@ -166,6 +187,7 @@ process_ogata <- function(data, file) {
         "cd34_cd45_pos" = cd34_cd45_pos,
         "bprog" = bprog,
         "myeloblast" = myeloblast,
+        "ogata_raw_table" = ogata_raw_table,
         "ogata_table" = ogata_table
     )
 }
