@@ -15,8 +15,10 @@ for (filename in files) {
     transformList <- flowCore::estimateLogicle(data, channels = colnames(comp))
     data <- flowWorkspace::transform(data, transformList)
 
+    print(data@description$`EXPERIMENT NAME`)
+
     rmarkdown::render("src/ogata/ogata.Rmd",
-        params = list(data = data, gates = process_ogata(data, filename)),
+        params = list(data = data, gates = process_ogata(data, filename, transformList)),
         output_file = sprintf(
             "../../output/ogata_%s.pdf",
             tools::file_path_sans_ext(basename(filename))

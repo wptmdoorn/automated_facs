@@ -3,7 +3,7 @@ library(flowCore)
 library(flowViz)
 library(flowDensity)
 
-process_ogata <- function(data, file) {
+process_ogata <- function(data, file, transformList) {
     channels <- c("V500-A", "SSC-A")
 
     singlets <- flowDensity(data,
@@ -111,7 +111,7 @@ process_ogata <- function(data, file) {
         gates = c(.1, NA),
         filter = matrix(c(
             2, 2, 4, 4, # x
-            5, 3.5, 3.5, 5 # y
+            5, 3.0, 3.0, 5 # y
         ), 4, 2)
     )
 
@@ -122,14 +122,31 @@ process_ogata <- function(data, file) {
         gates = c(.1, NA),
     )
 
-    ogata_myeloblast <- (myeloblast@cell.count / singlets@cell.count) * 100
+    myeloblast.ssc <- flowDensity(
+        obj = cd34_cd45_pos,
+        channels = c("SSC-A", "V500-A"),
+        position = c(FALSE, TRUE),
+        gates = c(.1, NA),
+        filter = matrix(c(
+            0, 40000, 40000, 0, # x
+            1.8, 1.8, 4, 4 # y
+        ), 4, 2)
+    )
+    
+    inv.trans <- inverseLogicleTransform(transformList)
+    
+    lympho.inv <- transform(lympho@flow.frame, inv.trans)
+    myeloblast.inv <- transform(myeloblast.ssc@flow.frame, inv.trans)
+    granu.inv <- transform(granu@flow.frame, inv.trans)
+
+    ogata_myeloblast <- (myeloblast.ssc@cell.count / singlets@cell.count) * 100
     ogata_bprog <- (bprog@cell.count / cd34_cd45_pos@cell.count) * 100
-    ogata_lymph_myeloblast <- (mean(exprs(lympho@flow.frame)[, "V500-A"],
+    ogata_lymph_myeloblast <- (mean(exprs(lympho.inv)[, "V500-A"],
         na.rm = TRUE
-    ) / mean(exprs(myeloblast@flow.frame)[, "V500-A"], na.rm = TRUE))
-    ogata_granulo_lymph <- (mean(exprs(granu@flow.frame)[, "SSC-A"],
+    ) / mean(exprs(myeloblast.inv)[, "V500-A"], na.rm = TRUE))
+    ogata_granulo_lymph <- (mean(exprs(granu.inv)[, "SSC-A"],
         na.rm = TRUE
-    ) / mean(exprs(lympho@flow.frame)[, "SSC-A"], na.rm = TRUE))
+    ) / mean(exprs(lympho.inv)[, "SSC-A"], na.rm = TRUE))
 
     total <- (ogata_myeloblast > 2) + (ogata_bprog < 5) +
         (ogata_lymph_myeloblast <= 4 | ogata_lymph_myeloblast >= 7.5) +
@@ -148,11 +165,11 @@ process_ogata <- function(data, file) {
         "Result" = c(
             cd34_cd45_pos@cell.count,
             bprog@cell.count,
-            myeloblast@cell.count,
-            mean(exprs(lympho@flow.frame)[, "V500-A"], na.rm = TRUE),
-            mean(exprs(myeloblast@flow.frame)[, "V500-A"], na.rm = TRUE),
-            mean(exprs(granu@flow.frame)[, "SSC-A"], na.rm = TRUE),
-            mean(exprs(lympho@flow.frame)[, "SSC-A"], na.rm = TRUE)
+            myeloblast.ssc@cell.count,
+            mean(exprs(lympho.inv)[, "V500-A"], na.rm = TRUE),
+            mean(exprs(myeloblast.inv)[, "V500-A"], na.rm = TRUE),
+            mean(exprs(granu.inv)[, "SSC-A"], na.rm = TRUE),
+            mean(exprs(lympho.inv)[, "SSC-A"], na.rm = TRUE)
         )
     )
 
@@ -168,6 +185,11 @@ process_ogata <- function(data, file) {
         "Result" = c(
             ogata_myeloblast,
             ogata_bprog, ogata_lymph_myeloblast, ogata_granulo_lymph, total
+        ), "Score" = c(
+            as.numeric(ogata_myeloblast > 2), 
+            as.numeric(ogata_bprog < 5), 
+            as.numeric((ogata_lymph_myeloblast <= 4 | ogata_lymph_myeloblast >= 7.5)),
+            as.numeric(ogata_granulo_lymph <= 6), total
         )
     )
 
@@ -187,6 +209,7 @@ process_ogata <- function(data, file) {
         "cd34_cd45_pos" = cd34_cd45_pos,
         "bprog" = bprog,
         "myeloblast" = myeloblast,
+        "myeloblast.ssc" = myeloblast.ssc,
         "ogata_raw_table" = ogata_raw_table,
         "ogata_table" = ogata_table
     )

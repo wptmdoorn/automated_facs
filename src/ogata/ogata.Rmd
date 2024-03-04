@@ -63,7 +63,7 @@ plotDens(params$gates$low_ssc, channels = c("V500-A", "PerCP-Cy5-5-A"), main='')
 points(params$gates$cd34_cd45_pos@filter, type = "l", col = "red", lwd = 2)
 ```
 
-## Visualize B-prog. cells and Myeloblasts (CD10 versus CD34)
+## Visualize B-prog. cells  (CD10 versus CD34)
 \vspace{-0.5cm}
 ```{r, echo=FALSE, message=FALSE, fig.width=4.5, fig.height=4.5, fig.align='center'}
 par(mar=c(5, 4, 1, 2) + 0.1)
@@ -72,7 +72,22 @@ plotDens(params$gates$cd34_cd45_pos,
     xlim = c(0, 5), ylim = c(0, 5)
 )
 points(params$gates$bprog@filter, type = "l", col = "red", lwd = 2)
-points(params$gates$myeloblast@filter, type = "l", col = "blue", lwd = 2)
+```
+
+## Visualize myeloblasts (CD45 vs SSC-A)
+\vspace{-0.5cm}
+```{r, echo=FALSE, message=FALSE, fig.width=4.5, fig.height=4.5, fig.align='center'}
+par(mar=c(5, 4, 1, 2) + 0.1)
+plotDens(params$gates$cd34_cd45_pos,
+    channels = c("SSC-A", "V500-A"),
+)
+points(params$gates$myeloblast.ssc@filter, type = "l", col = "red", lwd = 2)
+```
+
+## Raw OGATA components
+\vspace{-0.5cm}
+```{r, echo= FALSE, results='asis'}
+kable(params$gates$ogata_raw_table)
 ```
 
 ## Display the Table of the OGATA score with all components and final score
