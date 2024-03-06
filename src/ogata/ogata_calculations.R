@@ -22,10 +22,8 @@ process_ogata <- function(data, file, transformList) {
 
     granu <- flowDensity(
         obj = granu, channels = c("V500-A", "SSC-A"),
-        position = c(NA, TRUE),
-        # use.percentile = c(T, F),
-        # percentile = c(.05, NA),
-        gates = c(NA, 20000)
+        position = c(FALSE, TRUE),
+        percentile = c(.95, 0.01), use.percentile = c(T, T),
     )
 
     ery <- flowDensity(
